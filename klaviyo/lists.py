@@ -5,9 +5,9 @@ class Lists(KlaviyoAPI):
     LIST = 'list'
     LISTS = 'lists'
     SUBSCRIBE = 'subscribe'
+    MEMBER = 'members'
 
     def get_lists(self):
-
         """ Returns a list of Klaviyo lists """
         return self._v2_request('lists', self.HTTP_GET)
     
@@ -16,18 +16,29 @@ class Lists(KlaviyoAPI):
         This will create a new list in Klaviyo
         Args:
             list_name (str): A list name
+        Returns:
+
         """
         return self._v2_request('lists', self.HTTP_POST, list_name)
 
     def get_list_by_id(self, list_id):
         """
-        args:
+        This will fetch a list by it's ID
+        Args:
             list_id: str() the list id
+        Returns:
+
         """
         return self._v2_request('{}/{}'.format(self.LIST, list_id), self.HTTP_GET)
     
-    def update_list_by_id(self, list_id, list_name):
+    def update_list_name_by_id(self, list_id, list_name):
         """
+        This allows you to update a list's name
+        Args:
+            list_id (str)
+            list_name (str):
+        Returns:
+
         """
         params = dict({
             'list_name': list_name
@@ -37,47 +48,48 @@ class Lists(KlaviyoAPI):
         
     def delete_list(self, list_id):
         """
-        
+        Deletes a list by it's ID
+        Args:
+            list_id (str)
+        Returns:
+
+
         """
         return self._v2_request('{}/{}'.format(self.LIST, list_id), self.HTTP_DELETE)
-    
-    # TODO, probably better naming for this
-    def post_subscribers_to_list(self, list_id, profiles):
+
+    def add_subscribers_to_list(self, list_id, profiles):
         """
+        Uses the subscribe endpoint to subscribe user to list, this obeys the list settings
         Args:
+            list_id (str): klaviyo list id
             profiles (dict): for POST -> data must be a list of objects
+        Returns:
+
         """
         params = {
             "profiles": profiles
         }
         return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.SUBSCRIBE), self.HTTP_POST, params)
-    
-    def get_subscription_status(self):
+
+    def add_members_to_list(self, list_id, profiles):
+        """
+        This will just add a user to a list regardless of the settings
+        Args:
+            list_id (str): klaviyo list id
+            profiles (dict): for POST -> data must be a list of objects
+        """
+        params = {
+            "profiles": profiles
+        }
+        return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.MEMBERS), self.HTTP_POST, params)
+
+    def get_subscription_status(self, list_id):
+        """
+
+        Return:
+
+        """
         pass
-    
-    def list_subscription(self, list_id, data, subscription_type='subscribe', method="GET"):
-        """
-        args:
-            list_id: str() the list id
-            subscription_type: str() subscribe or members depending on the action
-            
-            
-        """
-        api_version = 'v2'
-
-        if method.upper() == "GET":
-            if not isinstance(data, list) or not  all(isinstance(s, str) for s in data):
-                raise KlaviyoException("Data must be a list of strings")
-
-            params = {
-                'emails': data
-            }
-
-            return self._request('list/{}/{}'.format(list_id, subscription_type), self.HTTP_GET, params, api_version=api_version)
-
-        elif method.upper() == "POST":
-            if not isinstance(data, list) or not isinstance(data[0], dict):
-                raise KlaviyoException("Data must be a list of objects")
 
     def unsubscribe_from_list(self, list_id, emails, subscription_type='subscribe'):
         """

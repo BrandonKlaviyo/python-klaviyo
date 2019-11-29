@@ -87,55 +87,51 @@ You can get metrics, a timeline of events and export analytics for a metric.  Se
 You can create, update, read, and delete lists.  See here for more information https://www.klaviyo.com/docs/api/v2/lists
 
     # to get all lists
-    client.get_lists()
+    client.Lists.get_lists()
     
     # to add a new list
-    client.create_list(list_name)
+    client.Lists.create_list(list_name)
     
     # get list details
-    client.list(list_id)
+    client.Lists.get_list_by_id(list_id)
     
     # update list name
-    client.list(
+    client.Lists.update_list_name_by_id(
       list_id, 
-      list_name = 'NEW_LIST_NAME',
-      method = 'POST'
+      list_name='NEW_LIST_NAME',
     )
     
     # delete a list
-    client.list(
-        list_id,
-        method = 'DELETE'
-    )
+    client.Lists.delete_list(list_id)
 
 Note in the list_subscription call, subscription_type is either subscribe or members.  Please refer to the docs to see which method is correct https://www.klaviyo.com/docs/api/v2/lists#post-subscribe and https://www.klaviyo.com/docs/api/v2/lists#post-members
 
     # subscribe members to a list and check if they're in a list
-    client.list_subscription(list_id, subscription_type, data=data, method="GET")
+    client.Lists.add_subscribers_to_list(list_id, profiles)
     
     # you can unsubscribe customers from a list
-    client.unsubscribe_from_list(list_id, subscription_type, emails)
+    client.Lists.unsubscribe_from_list(list_id, subscription_type, emails)
     
     # get exclusion emails from a list - marker is used for paginating
-    client.list_exclusions(list_id, marker=None)
+    client.Lists.list_exclusions(list_id, marker=None)
     
     # get all members in a group or list
-    client.all_members(group_id)
+    client.Lists.all_members(group_id)
     
 You can fetch profile information given the profile ID
 
     # get profile by profile_id
-    client.get_profile(profile_id)
+    client.Profiles.get_profile(profile_id)
     
     # get all metrics for a profile with the default kwargs
     # to paginate the responses you will get a UUID returned from the response, see here for more information
     # https://www.klaviyo.com/docs/api/people#metrics-timeline
-    client.get_profile_metrics_timeline(profile_id, since=None, count=100, sort='desc')
+    client.Profiles.get_profile_metrics_timeline(profile_id, since=None, count=100, sort='desc')
 
     # get all metrics for a profile with the default kwargs
     # to paginate the responses you will get a UUID returned from the response, see here for more information
     # https://www.klaviyo.com/docs/api/people#metrics-timeline
-    client.get_profile_metric_timeline(profile_id, metric_id, since=None, count=100, sort='desc')
+    client.Profiles.get_profile_metric_timeline(profile_id, metric_id, since=None, count=100, sort='desc')
 
 ## How to use it with a Django application?
 

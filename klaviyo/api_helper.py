@@ -12,6 +12,8 @@ try:
 except ImportError:
    from urllib import urlencode
 
+from klaviyo import __version__
+
 
 class KlaviyoException(Exception):
     pass
@@ -53,28 +55,30 @@ class KlaviyoAPI(ABC):
     ######################
     # HELPER FUNCTIONS
     ######################
+    @staticmethod
     def _normalize_timestamp(self, timestamp):
         if isinstance(timestamp, datetime.datetime):
             timestamp = time.mktime(timestamp.timetuple())
-
         return timestamp
 
-    def _build_query_string(self, params, is_test):
-        return urlencode({
-            self.KLAVIYO_DATA_VARIABLE: base64.b64encode(json.dumps(params).encode('utf-8')),
-            'test': 1 if is_test else 0,
-        })
-
+    @staticmethod
     def _filter_params(self, params):
         """ To make sre we're passing in params with values """
         return dict((k, v) for k, v in params.items() if v is not None)
 
+    @staticmethod
     def _build_marker_param(self, marker):
         """ A helper for the marker param """
         params = {}
         if marker:
             params['marker'] = marker
         return params
+
+    def _build_query_string(self, params, is_test):
+        return urlencode({
+            self.KLAVIYO_DATA_VARIABLE: base64.b64encode(json.dumps(params).encode('utf-8')),
+            'test': 1 if is_test else 0,
+        })
 
     #####################
     # API HELPER FUNCTIONS
@@ -157,7 +161,7 @@ class KlaviyoAPI(ABC):
         self.__is_valid_request_option(request_type=request_type)
         headers = {
             'Content-Type': "application/json",
-            'User-Agent': 'Klaviyo/Python/3.0'
+            'User-Agent': 'Klaviyo-Python/{}'.format(__version__)
         }
 
         response = getattr(requests, method.lower())(url, headers=headers, data=params)
@@ -173,12 +177,14 @@ class KlaviyoAPI(ABC):
         elif response.status_code == 429:
             raise KlaviyoRateLimitException(response.json())
 
+        # return the json response from a private call
         if request_type == self.PRIVATE:
             try:
                 return response.json()
             except (simplejson.JSONDecodeError, ValueError) as e:
                 raise KlaviyoException('Request did not return json: {}'.format(e))
 
+        # we return the str 1 or 0 for track/identify calls
         elif request_type == self.PUBLIC:
             return response.text
 

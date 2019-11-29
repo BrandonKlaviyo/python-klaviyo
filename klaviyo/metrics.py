@@ -43,17 +43,20 @@ class Metrics(KlaviyoAPI):
             'since': since
         }
         params = self._filter_params(params)
-        url = '{}/{}'.format(self.METRICS, TIMELINE)
+        url = '{}/{}'.format(self.METRICS, self.TIMELINE)
 
         return self._v1_request(url, self.HTTP_GET, params)
         
     def get_metric_timeline_by_id(self, metric_id, since=None, count=TIMELINE_BATCH_SIZE, sort='desc'):
         """"
+        Returns a timeline of events for a specific metric
         Args:
             metric_id (str): metric ID for the statistic
             since (str or int): next attribute of the previous api call or unix timestamp
             count (int): number of events retuned
             sort (str): sort order for timeline
+        Returns:
+
         """
         params = {
             'count': count,
@@ -76,6 +79,20 @@ class Metrics(KlaviyoAPI):
         by=None, 
         count=None
         ):
+        """
+        Exports metric values (counts, uniques, totals)
+        Args:
+            metric_id:
+            start_date:
+            end_date:
+            unit:
+            measurement:
+            where:
+            by:
+            count:
+        Return:
+
+        """
         params = {
             'metric_id': metric_id,
             'start_date': start_date,
