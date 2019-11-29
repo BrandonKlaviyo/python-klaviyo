@@ -8,6 +8,7 @@ setup(
 
     install_requires=[
         'requests >= 2.2.1',
+        'simplejson >=3.17.0',
     ],
 
     # metadata for upload to PyPI

@@ -22,6 +22,7 @@ pip-log.txt
 
 # PYENV
 .python-version
+.idea
 
 #Translations
 *.mo

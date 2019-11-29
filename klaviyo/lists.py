@@ -1,15 +1,13 @@
-from klaviyo import Klaviyo
+from .api_helper import KlaviyoAPI
 
 
-class Lists(Klaviyo):
+class Lists(KlaviyoAPI):
     LIST = 'list'
     LISTS = 'lists'
     SUBSCRIBE = 'subscribe'
 
-    def __init__(self):
-        pass
-
     def get_lists(self):
+
         """ Returns a list of Klaviyo lists """
         return self._v2_request('lists', self.HTTP_GET)
     
@@ -44,7 +42,7 @@ class Lists(Klaviyo):
         return self._v2_request('{}/{}'.format(self.LIST, list_id), self.HTTP_DELETE)
     
     # TODO, probably better naming for this
-    def post_subscribers_to_list(self, profiles):
+    def post_subscribers_to_list(self, list_id, profiles):
         """
         Args:
             profiles (dict): for POST -> data must be a list of objects
@@ -54,7 +52,8 @@ class Lists(Klaviyo):
         }
         return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.SUBSCRIBE), self.HTTP_POST, params)
     
-    def get_subscription_status
+    def get_subscription_status(self):
+        pass
     
     def list_subscription(self, list_id, data, subscription_type='subscribe', method="GET"):
         """

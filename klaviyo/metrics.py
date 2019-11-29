@@ -1,10 +1,10 @@
-from klaviyo import Klaviyo
+from .api_helper import KlaviyoAPI
 
 STARTING_PAGE = 0
 DEFAULT_BATCH_SIZE = 50
 TIMELINE_BATCH_SIZE = DEFAULT_BATCH_SIZE + DEFAULT_BATCH_SIZE
 
-class Metrics(Klaviyo):
+class Metrics(KlaviyoAPI):
     EXPORT = 'export'
     METRIC = 'metric'
     METRICS = 'metrics'

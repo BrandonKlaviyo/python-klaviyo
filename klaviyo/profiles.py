@@ -1,7 +1,9 @@
-from klaviyo import Klaviyo
+from .api_helper import KlaviyoAPI
 
-class Profiles(Klaviyo):
+class Profiles(KlaviyoAPI):
     PERSON = 'person'
+    def __init__(self):
+        pass
 
     def get_profile(self, profile_id):
         return self._v1_request('{}/{}'.format(self.PERSON, profile_id))
