@@ -85,6 +85,7 @@ class Lists(KlaviyoAPI):
 
     def get_subscription_status(self, list_id):
         """
+        Args:
 
         Return:
 
@@ -93,10 +94,13 @@ class Lists(KlaviyoAPI):
 
     def unsubscribe_from_list(self, list_id, emails, subscription_type='subscribe'):
         """
-        args:
+
+        Args:
             list_id: str() the list id
             subscription_type: str() subscribe or members depending on the action
             emails: a list of emails
+        Returns
+
         """
 
         params = {
@@ -106,9 +110,12 @@ class Lists(KlaviyoAPI):
 
     def list_exclusions(self, list_id, marker=None):
         """
-        args:
+
+        Args:
             list_id: str() the list id
             marker: int() optional returned from the previous get call
+        Returns:
+
         """
         params = self._build_marker_param(marker)
 
@@ -116,7 +123,8 @@ class Lists(KlaviyoAPI):
 
     def all_members(self, group_id, marker=None):
         """
-        args:
+
+        Args:
             id: str() the list id or the segment id
             marker: int() optional returned from the previous get call
         """

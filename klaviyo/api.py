@@ -25,12 +25,12 @@ class KlaviyoAPIResourceWrapper(object):
         else:
             self.resource_class = resource_class
 
-    def __getattr__(self, item, *args, **kwargs):
+    def __getattr__(self, item):
         """
         Overwrite to make us dynamically call the called class and it's method automatically
         """
 
-        return lambda: getattr(self.resource_class, item)(*args, **kwargs)
+        return lambda *args, **kwargs: getattr(self.resource_class, item)(*args, **kwargs)
 
     @classmethod
     def str_to_class(cls, str, api):

@@ -5,7 +5,6 @@ setup(
     name = 'klaviyo',
     version = __version__,
     packages = find_packages(),
-
     install_requires=[
         'requests >= 2.2.1',
         'simplejson >= 3.17.0',

@@ -43,6 +43,11 @@ class KlaviyoAPI(ABC):
     PRIVATE = 'private'
     PUBLIC = 'public'
 
+    # UNIVERSAL KEYS
+    METRIC = 'metric'
+    METRICS = 'metrics'
+    TIMELINE = 'timeline'
+
     def __init__(self, public_token=None, private_token=None, api_server=KLAVIYO_API_SERVER):
         self.public_token = public_token
         self.private_token = private_token
@@ -56,18 +61,18 @@ class KlaviyoAPI(ABC):
     # HELPER FUNCTIONS
     ######################
     @staticmethod
-    def _normalize_timestamp(self, timestamp):
+    def _normalize_timestamp(timestamp):
         if isinstance(timestamp, datetime.datetime):
             timestamp = time.mktime(timestamp.timetuple())
         return timestamp
 
     @staticmethod
-    def _filter_params(self, params):
+    def _filter_params(params):
         """ To make sre we're passing in params with values """
         return dict((k, v) for k, v in params.items() if v is not None)
 
     @staticmethod
-    def _build_marker_param(self, marker):
+    def _build_marker_param(marker):
         """ A helper for the marker param """
         params = {}
         if marker:
@@ -127,12 +132,9 @@ class KlaviyoAPI(ABC):
             self.V1_API,
             path,
         )
+        formatted_url = '{}?api_key={}'.format(url, self.private_token)
 
-        params.update({
-            'api_key': self.private_token
-        })
-
-        return self.__request(method, url, params)
+        return self.__request(method, formatted_url, params)
 
     def _pubic_request(self, path, querystring):
         """
@@ -145,7 +147,7 @@ class KlaviyoAPI(ABC):
         """
 
         url = '{}/{}?{}'.format(self.api_server, path, querystring)
-        return self.__request('get', url, request_type='public')
+        return self.__request(self.HTTP_GET, url, request_type='public')
 
     def __request(self, method, url, params={}, request_type='private'):
         """
@@ -160,7 +162,7 @@ class KlaviyoAPI(ABC):
         """
         self.__is_valid_request_option(request_type=request_type)
         headers = {
-            'Content-Type': "application/json",
+            'Content-Type': 'application/json',
             'User-Agent': 'Klaviyo-Python/{}'.format(__version__)
         }
 

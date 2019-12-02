@@ -4,14 +4,9 @@ STARTING_PAGE = 0
 DEFAULT_BATCH_SIZE = 50
 TIMELINE_BATCH_SIZE = DEFAULT_BATCH_SIZE + DEFAULT_BATCH_SIZE
 
+
 class Metrics(KlaviyoAPI):
     EXPORT = 'export'
-    METRIC = 'metric'
-    METRICS = 'metrics'
-    TIMELINE = 'timeline'
-
-    def __init__(self):
-        pass
 
     def get_metrics(self, page=STARTING_PAGE, count=DEFAULT_BATCH_SIZE):
         """
@@ -23,7 +18,7 @@ class Metrics(KlaviyoAPI):
         """
         params = {
             'page': page,
-            'count': count
+            'count': count,
         }
         return self._v1_request(self.METRICS, self.HTTP_GET, params)
     
@@ -40,8 +35,9 @@ class Metrics(KlaviyoAPI):
         params = {
             'count': count,
             'sort': sort,
-            'since': since
+            'since': since,
         }
+
         params = self._filter_params(params)
         url = '{}/{}'.format(self.METRICS, self.TIMELINE)
 
@@ -64,7 +60,7 @@ class Metrics(KlaviyoAPI):
             'since': since
         }
         params = self._filter_params(params)
-        url = '{}/{}/{}'.format(self.METRIC, metric_id, TIMELINE)
+        url = '{}/{}/{}'.format(self.METRIC, metric_id, self.TIMELINE)
 
         return self._v1_request(url, self.HTTP_GET, params)
 
