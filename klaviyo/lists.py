@@ -5,11 +5,12 @@ class Lists(KlaviyoAPI):
     LIST = 'list'
     LISTS = 'lists'
     SUBSCRIBE = 'subscribe'
-    MEMBER = 'members'
+    MEMBERS = 'members'
+    ALL = 'all'
 
     def get_lists(self):
         """ Returns a list of Klaviyo lists """
-        return self._v2_request('lists', self.HTTP_GET)
+        return self._v2_request(self.LISTS, self.HTTP_GET)
     
     def create_list(self, list_name):
         """
@@ -19,7 +20,7 @@ class Lists(KlaviyoAPI):
         Returns:
 
         """
-        return self._v2_request('lists', self.HTTP_POST, list_name)
+        return self._v2_request(self.LISTS, self.HTTP_POST, list_name)
 
     def get_list_by_id(self, list_id):
         """
@@ -106,7 +107,7 @@ class Lists(KlaviyoAPI):
         params = {
             'emails': emails
         }
-        return self._v2_request('list/{}/{}'.format(list_id, subscription_type), self.HTTP_DELETE, params)
+        return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, subscription_type), self.HTTP_DELETE, params)
 
     def list_exclusions(self, list_id, marker=None):
         """
@@ -119,7 +120,7 @@ class Lists(KlaviyoAPI):
         """
         params = self._build_marker_param(marker)
 
-        return self._v2_request('list/{}/exclusions/all'.format(list_id), params)
+        return self._v2_request('{}/{}/exclusions/{}'.format(self.LIST, list_id, self.ALL), params)
 
     def all_members(self, group_id, marker=None):
         """
@@ -130,4 +131,4 @@ class Lists(KlaviyoAPI):
         """
         params = self._build_marker_param(marker)
 
-        return self._v2_request('group/{}/members/all'.format(group_id), params)
+        return self._v2_request('group/{}/{}/{}'.format(group_id, self.MEMBERS, self.ALL), params)

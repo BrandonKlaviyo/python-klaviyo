@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABCMeta
 import base64
 import datetime
 import json
@@ -27,7 +27,8 @@ class KlaviyoRateLimitException(KlaviyoException):
     pass
 
 
-class KlaviyoAPI(ABC):
+class KlaviyoAPI(object):
+    __metaclass__ = ABCMeta
     KLAVIYO_API_SERVER = 'https://a.klaviyo.com/api'
     KLAVIYO_DATA_VARIABLE = 'data'
     V1_API = 'v1'

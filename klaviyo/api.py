@@ -29,7 +29,6 @@ class KlaviyoAPIResourceWrapper(object):
         """
         Overwrite to make us dynamically call the called class and it's method automatically
         """
-
         return lambda *args, **kwargs: getattr(self.resource_class, item)(*args, **kwargs)
 
     @classmethod

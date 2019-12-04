@@ -29,12 +29,12 @@ After installing the klaviyo package you can initiate it using your public token
 You can then easily use Klaviyo to track events or identify people.  Note, track and identify requests take your public token.
 
     # Track an event...
-    client.track('Filled out profile', email='someone@mailinator.com', properties={
+    client.Public.track('Filled out profile', email='someone@mailinator.com', properties={
         'Added social accounts' : False,
     })
     
     # you can also add profile properties
-    client.track(
+    client.Public.track(
       'Filled out profile', 
       email='someone@mailinator.com', 
       properties={
@@ -47,7 +47,7 @@ You can then easily use Klaviyo to track events or identify people.  Note, track
     )
 
     # ...or just add a property to someone
-    client.identify(email='thomas.jefferson@mailinator.com', properties={
+    client.Public.identify(email='thomas.jefferson@mailinator.com', properties={
         '$first_name': 'Thomas',
         '$last_name': 'Jefferson',
         'Plan' : 'Premium',
@@ -56,21 +56,21 @@ You can then easily use Klaviyo to track events or identify people.  Note, track
 You can get metrics, a timeline of events and export analytics for a metric.  See here for more https://www.klaviyo.com/docs/api/metrics
 
     # return all metrics
-    client.get_metrics()
+    client.Metrics.get_metrics()
     
     # you can paginate through using the page offset and count param
-    client.get_metrics(page=1, count=50)
+    client.Metrics.get_metrics(page=1, count=50)
     
     # return a timeline of all metrics
     # default params for getting metrics - since=None; count=100;  sort='desc'
-    client.get_metrics_timeline()
+    client.Metrics.get_metrics_timeline()
     
     # add a since param to get data 
     # you can paginate through using a Unix timestamp or a UUID obtained from the next attribute
-    client.get_metrics_timeline(since=since)
+    client.Metrics.get_metrics_timeline(since=since)
     
     # you can query for a specific metric id
-    client.get_metric_timeline_by_id(metric_id)
+    client.Metrics.get_metric_timeline_by_id(metric_id)
     
     # you can export metric data https://www.klaviyo.com/docs/api/metrics#metric-export
     params:
