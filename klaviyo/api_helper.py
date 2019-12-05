@@ -159,7 +159,7 @@ class KlaviyoAPI(object):
             params (dict or json): the body of the request
         Returns:
             (str, dict): public returns 1 or 0  (pass/fail)
-                        v1/v2 returns dict
+                        v1/v2 returns (dict, list)
         """
         self.__is_valid_request_option(request_type=request_type)
         headers = {

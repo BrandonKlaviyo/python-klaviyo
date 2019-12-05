@@ -64,7 +64,7 @@ class Metrics(KlaviyoAPI):
 
         return self._v1_request(url, self.HTTP_GET, params)
 
-    def metric_export(
+    def get_metric_export(
         self, 
         metric_id, 
         start_date=None, 

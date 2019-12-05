@@ -72,62 +72,101 @@ class Lists(KlaviyoAPI):
         }
         return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.SUBSCRIBE), self.HTTP_POST, params)
 
+    def get_list_subscription_status(self, list_id, emails):
+        """
+        Check if profiles are on a list and not suppressed
+        Args:
+            list_id (str): klaviyo list id
+            emails (list): a list of email address
+        Returns:
+            (list) of profiles that are subscriped
+        """
+        params = {
+            'emails': emails
+        }
+
+        return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.SUBSCRIBE), self.HTTP_GET, params)
+
+    def delete_subscriber_from_list(self, list_id, emails):
+        """
+        Delete and remove profiles from list
+        Args:
+            list_id (str): klaviyo list id
+            emails (list): a list of email address
+        Returns:
+            HTTP OK response
+        """
+        params = {
+            'emails': emails
+        }
+
+        return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.SUBSCRIBE), self.HTTP_DELETE, params)
+
     def add_members_to_list(self, list_id, profiles):
         """
         This will just add a user to a list regardless of the settings
         Args:
             list_id (str): klaviyo list id
             profiles (dict): for POST -> data must be a list of objects
+        ReturnsL
+            (list) of records containing the emails and profile id that were successful
         """
         params = {
-            "profiles": profiles
+            'profiles': profiles
         }
         return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.MEMBERS), self.HTTP_POST, params)
 
-    def get_subscription_status(self, list_id):
+    def get_list_membership_status(self, list_id, emails):
         """
+        Check if profiles are on a list
         Args:
-
-        Return:
-
+            list_id (str): klaviyo list id
+            emails (list): a list of email address
+        Returns:
+            JSON Objects corresponding to the email addresses on their list if they're on the list
         """
-        pass
-
-    def unsubscribe_from_list(self, list_id, emails, subscription_type='subscribe'):
-        """
-
-        Args:
-            list_id: str() the list id
-            subscription_type: str() subscribe or members depending on the action
-            emails: a list of emails
-        Returns
-
-        """
-
         params = {
             'emails': emails
         }
-        return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, subscription_type), self.HTTP_DELETE, params)
 
-    def list_exclusions(self, list_id, marker=None):
+        return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.MEMBERS), self.HTTP_GET, params)
+
+    def delete_list_membership_status(self, list_id, emails):
         """
+        Remove profiles from a list
+        Args:
+            list_id (str): klaviyo list id
+            emails (list): a list of email address
+        Returns:
+            HTTP OK response
+        """
+        params = {
+            'emails': emails
+        }
 
+        return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.MEMBERS), self.HTTP_DELETE, params)
+
+    def get_list_exclusions(self, list_id, marker=None):
+        """
+        Get all of the emails that have been excluded from a list along with the exclusion reason and exclusion time
         Args:
             list_id: str() the list id
             marker: int() optional returned from the previous get call
         Returns:
-
+            a list of objects containing an excluded email
         """
         params = self._build_marker_param(marker)
 
         return self._v2_request('{}/{}/exclusions/{}'.format(self.LIST, list_id, self.ALL), params)
 
-    def all_members(self, group_id, marker=None):
+    def get_all_members(self, group_id, marker=None):
         """
-
+        Get all of the emails in a given list or segment
         Args:
-            id: str() the list id or the segment id
+            group_id: str() the list id or the segment id
             marker: int() optional returned from the previous get call
+        Returns:
+            (list) of records containing profile IDs and emails and potentially a marker
         """
         params = self._build_marker_param(marker)
 

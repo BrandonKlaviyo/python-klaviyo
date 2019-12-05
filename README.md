@@ -57,23 +57,27 @@ You can get metrics, a timeline of events and export analytics for a metric.  Se
 
     # return all metrics
     client.Metrics.get_metrics()
-    
-    # you can paginate through using the page offset and count param
-    client.Metrics.get_metrics(page=1, count=50)
+      args/kwargs:
+        page=0
+        count=50
     
     # return a timeline of all metrics
-    # default params for getting metrics - since=None; count=100;  sort='desc'
     client.Metrics.get_metrics_timeline()
-    
-    # add a since param to get data 
-    # you can paginate through using a Unix timestamp or a UUID obtained from the next attribute
-    client.Metrics.get_metrics_timeline(since=since)
-    
+      args/kwargs:
+        since=None (unix or returned uuid from request)
+        count=100
+        sort='desc'
+
     # you can query for a specific metric id
     client.Metrics.get_metric_timeline_by_id(metric_id)
+      args/kwargs:
+        since=None (unix or returned uuid)
+        count=50
+        sort='desc'
     
-    # you can export metric data https://www.klaviyo.com/docs/api/metrics#metric-export
-    params:
+    Export metric specific values
+    client.Metrics.get_metric_export(metric_id)
+      args/kwargs:
         start_date
         end_date
         unit
@@ -81,8 +85,6 @@ You can get metrics, a timeline of events and export analytics for a metric.  Se
         where 
         by
         count
-
-    client.metric_export(metric_id)
 
 You can create, update, read, and delete lists.  See here for more information https://www.klaviyo.com/docs/api/v2/lists
 
@@ -103,20 +105,36 @@ You can create, update, read, and delete lists.  See here for more information h
     
     # delete a list
     client.Lists.delete_list(list_id)
-
-Note in the list_subscription call, subscription_type is either subscribe or members.  Please refer to the docs to see which method is correct https://www.klaviyo.com/docs/api/v2/lists#post-subscribe and https://www.klaviyo.com/docs/api/v2/lists#post-members
-
-    # subscribe members to a list and check if they're in a list
-    client.Lists.add_subscribers_to_list(list_id, profiles)
     
-    # you can unsubscribe customers from a list
-    client.Lists.unsubscribe_from_list(list_id, subscription_type, emails)
+    # Add subscribers to a list, this will follow the lists double opt in settings
+    client.Lists.add_subscribers_to_list(list_id, profiles)
+        profiles: is list of objects formatted like {'email': EMAIL, 'custom_property': NAME}
+     
+    # Check email address subscription status to a list
+    client.Lists.get_list_subscription_status(list_id, emails)
+        emails: is a list of email addresses
+    
+    # Unsubscribe and remove profile from a list
+    client.Lists.delete_subscriber_from_list(list_id, emails)
+        emails: is a list of email addresses 
+
+    # Add members to a list, this doesn't care about the list double opt in setting
+    client.Lists.add_members_to_list(list_id, profiles)
+        profiles: is list of objects formatted like {'email': EMAIL, 'custom_property': NAME}
+        
+    # Check email addresses if they're in a list
+    client.Lists.get_list_membership_status(list_id_, emails)
+        emails: is a list of email addresses
+     
+    # Remove emails from a list
+    client.Lists.delete_list_membership_status(list_id, emails)
+        emails:  a list of email addresses
     
     # get exclusion emails from a list - marker is used for paginating
-    client.Lists.list_exclusions(list_id, marker=None)
+    client.Lists.get_list_exclusions(list_id, marker=None)
     
     # get all members in a group or list
-    client.Lists.all_members(group_id)
+    client.Lists.get_all_members(group_id, marker=None)
     
 You can fetch profile information given the profile ID
 

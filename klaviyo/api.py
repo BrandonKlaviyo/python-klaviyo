@@ -12,10 +12,10 @@ class Klaviyo(object):
         self.private_token = private_token
 
     def __getattr__(self, item):
-        return KlaviyoAPIResourceWrapper(item, self)
+        return KlaviyoAPIDynamicWrapper(item, self)
 
 
-class KlaviyoAPIResourceWrapper(object):
+class KlaviyoAPIDynamicWrapper(object):
     def __init__(self, resource_class, api, *args, **kwargs):
         """
         An API Wrapper to dynamically load the class and method
