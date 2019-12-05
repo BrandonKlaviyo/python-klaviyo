@@ -7,6 +7,7 @@ class Lists(KlaviyoAPI):
     SUBSCRIBE = 'subscribe'
     MEMBERS = 'members'
     ALL = 'all'
+    LIST_NAME = 'list_name'
 
     def get_lists(self):
         """ Returns a list of Klaviyo lists """
@@ -18,9 +19,12 @@ class Lists(KlaviyoAPI):
         Args:
             list_name (str): A list name
         Returns:
-
+            (dict) containing the list_id
         """
-        return self._v2_request(self.LISTS, self.HTTP_POST, list_name)
+        params = {
+            self.LIST_NAME: list_name
+        }
+        return self._v2_request(self.LISTS, self.HTTP_POST, params)
 
     def get_list_by_id(self, list_id):
         """
@@ -28,7 +32,7 @@ class Lists(KlaviyoAPI):
         Args:
             list_id: str() the list id
         Returns:
-
+            (dict): information about the list
         """
         return self._v2_request('{}/{}'.format(self.LIST, list_id), self.HTTP_GET)
     
@@ -42,7 +46,7 @@ class Lists(KlaviyoAPI):
 
         """
         params = {
-            'list_name': list_name
+            self.LIST_NAME: list_name
         }
 
         return self._v2_request('{}/{}'.format(self.LIST, list_id), self.HTTP_PUT, params)
@@ -63,9 +67,9 @@ class Lists(KlaviyoAPI):
         Uses the subscribe endpoint to subscribe user to list, this obeys the list settings
         Args:
             list_id (str): klaviyo list id
-            profiles (dict): for POST -> data must be a list of objects
+            profiles (list of dict): list of dicts containg profile info
         Returns:
-
+            (list of dicts): list of subscribed members
         """
         params = {
             self.PROFILES: profiles
@@ -109,7 +113,7 @@ class Lists(KlaviyoAPI):
             list_id (str): klaviyo list id
             profiles (dict): for POST -> data must be a list of objects
         ReturnsL
-            (list) of records containing the emails and profile id that were successful
+            (list) of objects containing the emails and profile id that were successful
         """
         params = {
             self.PROFILES: profiles
@@ -157,7 +161,7 @@ class Lists(KlaviyoAPI):
         """
         params = self._build_marker_param(marker)
 
-        return self._v2_request('{}/{}/exclusions/{}'.format(self.LIST, list_id, self.ALL), params)
+        return self._v2_request('{}/{}/exclusions/{}'.format(self.LIST, list_id, self.ALL), self.HTTP_GET, params)
 
     def get_all_members(self, group_id, marker=None):
         """
@@ -170,4 +174,4 @@ class Lists(KlaviyoAPI):
         """
         params = self._build_marker_param(marker)
 
-        return self._v2_request('group/{}/{}/{}'.format(group_id, self.MEMBERS, self.ALL), params)
+        return self._v2_request('group/{}/{}/{}'.format(group_id, self.MEMBERS, self.ALL), self.HTTP_GET, params)

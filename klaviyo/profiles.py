@@ -43,7 +43,7 @@ class Profiles(KlaviyoAPI):
             filtered_params
         )
 
-    def get_profile_metric_timeline(self, profile_id, metric_id, since=None, count=100, sort='desc'):
+    def get_profile_metrics_timeline_by_id(self, profile_id, metric_id, since=None, count=100, sort='desc'):
         """
         https://www.klaviyo.com/docs/api/people#metric-timeline
         Gets a profiles event data for one metric

@@ -149,7 +149,7 @@ You can fetch profile information given the profile ID
     # get all metrics for a profile with the default kwargs
     # to paginate the responses you will get a UUID returned from the response, see here for more information
     # https://www.klaviyo.com/docs/api/people#metrics-timeline
-    client.Profiles.get_profile_metric_timeline(profile_id, metric_id, since=None, count=100, sort='desc')
+    client.Profiles.get_profile_metrics_timeline_by_id(profile_id, metric_id, since=None, count=100, sort='desc')
 
 ## How to use it with a Django application?
 

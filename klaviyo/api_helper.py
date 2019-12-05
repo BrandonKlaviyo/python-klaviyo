@@ -33,6 +33,7 @@ class KlaviyoAPI(object):
     KLAVIYO_DATA_VARIABLE = 'data'
     V1_API = 'v1'
     V2_API = 'v2'
+    EMPTY_RESPONSE = ''
 
     # HTTP METHODS
     HTTP_DELETE = 'delete'
@@ -187,15 +188,31 @@ class KlaviyoAPI(object):
             raise KlaviyoAuthenticationError('The api key specified is not valid')
         elif response.status_code == 429:
             raise KlaviyoRateLimitException(response.json())
+        elif response.status_code != 200:
+            raise KlaviyoException('HTTP Status Code: {}'.format(response.status_code))
 
         # return the json response from a private call
         if request_type == self.PRIVATE:
-            try:
-                return response.json()
-            except (simplejson.JSONDecodeError, ValueError) as e:
-                raise KlaviyoException('Request did not return json: {}'.format(e))
+            return self.__handle_200_response(response)
 
         # we return the str 1 or 0 for track/identify calls
         elif request_type == self.PUBLIC:
             return response.text
+
+    def __handle_200_response(self, response):
+        """
+        A 200 response, either return json or http ok response
+        Args:
+            reponse (obj): Requests object
+        Returns:
+            (json or http ok)
+        """
+        try:
+            return response.json()
+        except (simplejson.JSONDecodeError, ValueError) as e:
+            # it's kinda bad that we just do this, but need to return if it's a 200
+            if response.text == self.EMPTY_RESPONSE:
+                return response.text
+            else:
+                raise KlaviyoException('Request did not return json: {}'.format(e))
 
