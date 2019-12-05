@@ -27,9 +27,9 @@ class Profiles(KlaviyoAPI):
             (dict): event data related to a profile
         """
         params = {
-            'since': since,
-            'count': count,
-            'sort': sort
+            self.COUNT: count,
+            self.SORT: sort,
+            self.SINCE: since,
         }
         filtered_params = self._filter_params(params)
 
@@ -57,9 +57,9 @@ class Profiles(KlaviyoAPI):
             (dict): information about the specified metric id for the profile
         """
         params = {
-            'since': since,
-            'count': count,
-            'sort': sort
+            self.COUNT: count,
+            self.SORT: sort,
+            self.SINCE: since,
         }
         filtered_params = self._filter_params(params)
 

@@ -49,6 +49,14 @@ class KlaviyoAPI(object):
     METRICS = 'metrics'
     TIMELINE = 'timeline'
 
+    # REQUEST PARAMS
+    COUNT = 'count'
+    PAGE = 'page'
+    SORT = 'sort'
+    PROFILES = 'profiles'
+    EMAILS = 'emails'
+    SINCE = 'since'
+
     def __init__(self, public_token=None, private_token=None, api_server=KLAVIYO_API_SERVER):
         self.public_token = public_token
         self.private_token = private_token

@@ -17,8 +17,8 @@ class Metrics(KlaviyoAPI):
             (dict): with data list of metrics
         """
         params = {
-            'page': page,
-            'count': count,
+            self.PAGE: page,
+            self.COUNT: count,
         }
         return self._v1_request(self.METRICS, self.HTTP_GET, params)
     
@@ -33,9 +33,9 @@ class Metrics(KlaviyoAPI):
             (dict): metric timeline information
         """
         params = {
-            'count': count,
-            'sort': sort,
-            'since': since,
+            self.COUNT: count,
+            self.SORT: sort,
+            self.SINCE: since,
         }
 
         params = self._filter_params(params)
@@ -55,9 +55,9 @@ class Metrics(KlaviyoAPI):
 
         """
         params = {
-            'count': count,
-            'sort': sort,
-            'since': since
+            self.COUNT: count,
+            self.SORT: sort,
+            self.SINCE: since,
         }
         params = self._filter_params(params)
         url = '{}/{}/{}'.format(self.METRIC, metric_id, self.TIMELINE)
@@ -97,7 +97,7 @@ class Metrics(KlaviyoAPI):
             'measurement': measurement,
             'where': where,
             'by': by,
-            'count': count
+            self.COUNT: count
         }
         params = self._filter_params(params)
 

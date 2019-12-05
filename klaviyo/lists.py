@@ -41,9 +41,9 @@ class Lists(KlaviyoAPI):
         Returns:
 
         """
-        params = dict({
+        params = {
             'list_name': list_name
-        })
+        }
 
         return self._v2_request('{}/{}'.format(self.LIST, list_id), self.HTTP_PUT, params)
         
@@ -68,7 +68,7 @@ class Lists(KlaviyoAPI):
 
         """
         params = {
-            "profiles": profiles
+            self.PROFILES: profiles
         }
         return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.SUBSCRIBE), self.HTTP_POST, params)
 
@@ -82,7 +82,7 @@ class Lists(KlaviyoAPI):
             (list) of profiles that are subscriped
         """
         params = {
-            'emails': emails
+            self.EMAILS: emails
         }
 
         return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.SUBSCRIBE), self.HTTP_GET, params)
@@ -97,7 +97,7 @@ class Lists(KlaviyoAPI):
             HTTP OK response
         """
         params = {
-            'emails': emails
+            self.EMAILS: emails
         }
 
         return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.SUBSCRIBE), self.HTTP_DELETE, params)
@@ -112,7 +112,7 @@ class Lists(KlaviyoAPI):
             (list) of records containing the emails and profile id that were successful
         """
         params = {
-            'profiles': profiles
+            self.PROFILES: profiles
         }
         return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.MEMBERS), self.HTTP_POST, params)
 
@@ -126,7 +126,7 @@ class Lists(KlaviyoAPI):
             JSON Objects corresponding to the email addresses on their list if they're on the list
         """
         params = {
-            'emails': emails
+            self.EMAILS: emails
         }
 
         return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.MEMBERS), self.HTTP_GET, params)
@@ -141,7 +141,7 @@ class Lists(KlaviyoAPI):
             HTTP OK response
         """
         params = {
-            'emails': emails
+            self.EMAILS: emails
         }
 
         return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.MEMBERS), self.HTTP_DELETE, params)
