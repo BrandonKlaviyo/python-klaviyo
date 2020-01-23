@@ -91,7 +91,7 @@ class Lists(KlaviyoAPI):
 
         return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.SUBSCRIBE), self.HTTP_GET, params)
 
-    def delete_subscriber_from_list(self, list_id, emails):
+    def delete_subscribers_from_list(self, list_id, emails):
         """
         Delete and remove profiles from list
         Args:

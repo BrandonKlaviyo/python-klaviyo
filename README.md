@@ -115,7 +115,7 @@ You can create, update, read, and delete lists.  See here for more information h
         emails: is a list of email addresses
     
     # Unsubscribe and remove profile from a list
-    client.Lists.delete_subscriber_from_list(list_id, emails)
+    client.Lists.delete_subscribers_from_list(list_id, emails)
         emails: is a list of email addresses 
 
     # Add members to a list, this doesn't care about the list double opt in setting
@@ -150,6 +150,10 @@ You can fetch profile information given the profile ID
     # to paginate the responses you will get a UUID returned from the response, see here for more information
     # https://www.klaviyo.com/docs/api/people#metrics-timeline
     client.Profiles.get_profile_metrics_timeline_by_id(profile_id, metric_id, since=None, count=100, sort='desc')
+
+## Rate Limiting
+  If a rate limit happens it will throw a klaviyo.exceptions.KlaviyoRateLimitException
+  This will contain a detail key with a string value mentioning the time to back off in
 
 ## How to use it with a Django application?
 

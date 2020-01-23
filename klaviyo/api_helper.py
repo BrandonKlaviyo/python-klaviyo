@@ -12,19 +12,11 @@ try:
 except ImportError:
    from urllib import urlencode
 
+from .exceptions import (
+    KlaviyoException, KlaviyoAuthenticationError,
+    KlaviyoRateLimitException
+)
 from klaviyo import __version__
-
-
-class KlaviyoException(Exception):
-    pass
-
-
-class KlaviyoAuthenticationError(KlaviyoException):
-    pass
-
-
-class KlaviyoRateLimitException(KlaviyoException):
-    pass
 
 
 class KlaviyoAPI(object):
@@ -57,6 +49,10 @@ class KlaviyoAPI(object):
     PROFILES = 'profiles'
     EMAILS = 'emails'
     SINCE = 'since'
+
+    # SORTING
+    SORT_ASC = 'asc'
+    SORT_DESC = 'desc'
 
     def __init__(self, public_token=None, private_token=None, api_server=KLAVIYO_API_SERVER):
         self.public_token = public_token

@@ -14,7 +14,7 @@ class Profiles(KlaviyoAPI):
         """
         return self._v1_request('{}/{}'.format(self.PERSON, profile_id), self.HTTP_GET)
 
-    def get_profile_metrics_timeline(self, profile_id, since=None, count=100, sort='desc'):
+    def get_profile_metrics_timeline(self, profile_id, since=None, count=100, sort=KlaviyoAPI.SORT_DESC):
         """
         https://www.klaviyo.com/docs/api/people#metrics-timeline
         Gets a timeline of events on a profile
@@ -43,7 +43,7 @@ class Profiles(KlaviyoAPI):
             filtered_params
         )
 
-    def get_profile_metrics_timeline_by_id(self, profile_id, metric_id, since=None, count=100, sort='desc'):
+    def get_profile_metrics_timeline_by_id(self, profile_id, metric_id, since=None, count=100, sort=KlaviyoAPI.SORT_DESC):
         """
         https://www.klaviyo.com/docs/api/people#metric-timeline
         Gets a profiles event data for one metric

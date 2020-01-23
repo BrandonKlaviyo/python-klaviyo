@@ -22,7 +22,7 @@ class Metrics(KlaviyoAPI):
         }
         return self._v1_request(self.METRICS, self.HTTP_GET, params)
     
-    def get_metrics_timeline(self, since=None, count=TIMELINE_BATCH_SIZE, sort='desc'):
+    def get_metrics_timeline(self, since=None, count=TIMELINE_BATCH_SIZE, sort=KlaviyoAPI.SORT_DESC):
         """"
         Fetches all of the metrics and it's events regardless of the statistic
         Args:
@@ -43,7 +43,7 @@ class Metrics(KlaviyoAPI):
 
         return self._v1_request(url, self.HTTP_GET, params)
         
-    def get_metric_timeline_by_id(self, metric_id, since=None, count=TIMELINE_BATCH_SIZE, sort='desc'):
+    def get_metric_timeline_by_id(self, metric_id, since=None, count=TIMELINE_BATCH_SIZE, sort=KlaviyoAPI.SORT_DESC):
         """"
         Returns a timeline of events for a specific metric
         Args:
