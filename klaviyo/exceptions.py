@@ -8,3 +8,7 @@ class KlaviyoAuthenticationError(KlaviyoException):
 
 class KlaviyoRateLimitException(KlaviyoException):
     pass
+
+
+class KlaviyoServerError(KlaviyoException):
+    pass

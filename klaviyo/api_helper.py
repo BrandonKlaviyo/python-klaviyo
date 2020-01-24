@@ -14,7 +14,7 @@ except ImportError:
 
 from .exceptions import (
     KlaviyoException, KlaviyoAuthenticationError,
-    KlaviyoRateLimitException
+    KlaviyoRateLimitException, KlaviyoServerError
 )
 from klaviyo import __version__
 
@@ -184,6 +184,13 @@ class KlaviyoAPI(object):
             raise KlaviyoAuthenticationError('The api key specified is not valid')
         elif response.status_code == 429:
             raise KlaviyoRateLimitException(response.json())
+        elif response.status_code in (500, 503, ):
+            raise KlaviyoServerError('A server error status code {} has happened, message: {}'.format(
+                    response.status_code,
+                    # NOTE just truncating this
+                    response.text[:100]
+                )
+            )
         elif response.status_code != 200:
             raise KlaviyoException('HTTP Status Code: {}'.format(response.status_code))
 
