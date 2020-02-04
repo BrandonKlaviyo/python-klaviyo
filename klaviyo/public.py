@@ -38,7 +38,7 @@ class Public(KlaviyoAPI):
         Returns:
             (str): 1 (pass) or 0 (fail)
         """
-        if email is None and id is None:
+        if not email and not id:
             raise KlaviyoException(self.ERROR_MESSAGE_ID_AND_EMAIL)
 
         if properties is None:
@@ -101,7 +101,7 @@ class Public(KlaviyoAPI):
 
     def identify(self, email=None, id=None, properties={}, is_test=False):
         """
-        Makes an identify call to Klaviyo API. This will create/update a user with it's associated customer properties
+        Makes an identify call to Klaviyo API. This will create/update a user with its associated customer properties
         Args:
             email (str or None): email address
             id (str or None): external id for customer

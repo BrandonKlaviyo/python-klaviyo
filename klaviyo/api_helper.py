@@ -74,7 +74,7 @@ class KlaviyoAPI(object):
 
     @staticmethod
     def _filter_params(params):
-        """ To make sre we're passing in params with values """
+        """ To make sure we're passing in params with values """
         return dict((k, v) for k, v in params.items() if v is not None)
 
     @staticmethod
@@ -178,7 +178,7 @@ class KlaviyoAPI(object):
 
     def __handle_response(self, response, request_type):
         """
-        A Helper to either return either a response or a handled exception
+        A Response handler to return a valid response json/text or a handled exception
         """
         if response.status_code == 403:
             raise KlaviyoAuthenticationError('The api key specified is not valid')

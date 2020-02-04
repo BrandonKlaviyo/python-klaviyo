@@ -27,7 +27,7 @@ class Metrics(KlaviyoAPI):
         Fetches all of the metrics and it's events regardless of the statistic
         Args:
             since (str or int): next attribute of the previous api call or unix timestamp
-            count (int): number of events retuned
+            count (int): number of events returned
             sort (str): sort order for timeline
         Returns:
             (dict): metric timeline information
@@ -49,7 +49,7 @@ class Metrics(KlaviyoAPI):
         Args:
             metric_id (str): metric ID for the statistic
             since (str or int): next attribute of the previous api call or unix timestamp
-            count (int): number of events retuned
+            count (int): number of events returned
             sort (str): sort order for timeline
         Returns:
 

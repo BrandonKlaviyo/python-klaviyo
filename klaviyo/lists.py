@@ -28,7 +28,7 @@ class Lists(KlaviyoAPI):
 
     def get_list_by_id(self, list_id):
         """
-        This will fetch a list by it's ID
+        This will fetch a list by its ID
         Args:
             list_id: str() the list id
         Returns:
@@ -53,7 +53,7 @@ class Lists(KlaviyoAPI):
         
     def delete_list(self, list_id):
         """
-        Deletes a list by it's ID
+        Deletes a list by its ID
         Args:
             list_id (str)
         Returns:
@@ -81,9 +81,9 @@ class Lists(KlaviyoAPI):
         Check if profiles are on a list and not suppressed
         Args:
             list_id (str): klaviyo list id
-            emails (list): a list of email address
+            emails (list): a list of email addresses
         Returns:
-            (list) of profiles that are subscriped
+            (list) of profiles that are subscribed
         """
         params = {
             self.EMAILS: emails
@@ -96,7 +96,7 @@ class Lists(KlaviyoAPI):
         Delete and remove profiles from list
         Args:
             list_id (str): klaviyo list id
-            emails (list): a list of email address
+            emails (list): a list of email addresses
         Returns:
             HTTP OK response
         """
@@ -112,7 +112,7 @@ class Lists(KlaviyoAPI):
         Args:
             list_id (str): klaviyo list id
             profiles (dict): for POST -> data must be a list of objects
-        ReturnsL
+        Returns:
             (list) of objects containing the emails and profile id that were successful
         """
         params = {
@@ -125,7 +125,7 @@ class Lists(KlaviyoAPI):
         Check if profiles are on a list
         Args:
             list_id (str): klaviyo list id
-            emails (list): a list of email address
+            emails (list): a list of email addresses
         Returns:
             JSON Objects corresponding to the email addresses on their list if they're on the list
         """
@@ -140,7 +140,7 @@ class Lists(KlaviyoAPI):
         Remove profiles from a list
         Args:
             list_id (str): klaviyo list id
-            emails (list): a list of email address
+            emails (list): a list of email addresses
         Returns:
             HTTP OK response
         """

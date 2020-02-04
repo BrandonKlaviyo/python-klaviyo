@@ -153,7 +153,7 @@ You can fetch profile information given the profile ID
 
 ## Rate Limiting
   If a rate limit happens it will throw a klaviyo.exceptions.KlaviyoRateLimitException
-  This will contain a detail key with a string value mentioning the time to back off in
+  This will contain a detail key with a string value mentioning the time to back off in seconds
 
 ## How to use it with a Django application?
 

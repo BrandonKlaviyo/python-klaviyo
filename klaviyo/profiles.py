@@ -6,7 +6,7 @@ class Profiles(KlaviyoAPI):
     def get_profile(self, profile_id):
         """
         https://www.klaviyo.com/docs/api/people#person
-        Get a profile by it's ID
+        Get a profile by its ID
         Args:
             profile_id (str): profile id for a profile
         Returns:
