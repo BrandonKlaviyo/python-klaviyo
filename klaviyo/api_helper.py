@@ -206,7 +206,7 @@ class KlaviyoAPI(object):
         """
         A 200 response, either return json or http ok response
         Args:
-            reponse (obj): Requests object
+            response (obj): Requests object
         Returns:
             (json or http ok)
         """

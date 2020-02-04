@@ -24,7 +24,7 @@ class Metrics(KlaviyoAPI):
     
     def get_metrics_timeline(self, since=None, count=TIMELINE_BATCH_SIZE, sort=KlaviyoAPI.SORT_DESC):
         """"
-        Fetches all of the metrics and it's events regardless of the statistic
+        Fetches all of the metrics and its events regardless of the statistic
         Args:
             since (str or int): next attribute of the previous api call or unix timestamp
             count (int): number of events returned
